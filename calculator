@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Page Calculator</title>
+    <style>
+        .calculator {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .calculator input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .calculator select {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .calculator button {
+            width: 50%;
+            margin-top: 10px;
+            padding: 5px;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <select id="states" multiple>
+            <option value="New York">New York</option>
+            <option value="California">California</option>
+            <option value="Texas">Texas</option>
+            <!-- Add more states here -->
+        </select>
+        <input type="number" id="numEmployees" placeholder="Enter number of employees" />
+        <button onclick="calculate()">Calculate</button>
+        <table id="resultTable">
+            <tr>
+                <th>State</th>
+                <th>Multiplier</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>New York</td>
+                <td>2</td>
+                <td id="resultNewYork"></td>
+            </tr>
+            <tr>
+                <td>California</td>
+                <td>3</td>
+                <td id="resultCalifornia"></td>
+            </tr>
+            <tr>
+                <td>Texas</td>
+                <td>4</td>
+                <td id="resultTexas"></td>
+            </tr>
+            <!-- Add more rows for additional states -->
+        </table>
+        <p id="sumResult"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            var statesSelect = document.getElementById('states');
+            var numEmployees = parseFloat(document.getElementById('numEmployees').value);
+            var selectedStates = [];
+            var sum = 0;
+            for (var i = 0; i < statesSelect.options.length; i++) {
+                if (statesSelect.options[i].selected) {
+                    selectedStates.push(statesSelect.options[i].value);
+                }
+            }
+            for (var j = 0; j < selectedStates.length; j++) {
+                var state = selectedStates[j];
+                var multiplier = parseFloat(document.getElementById('result' + state.replace(/\s/g, '')).previousSibling.innerText);
+                var result = numEmployees * multiplier;
+                document.getElementById('result' + state.replace(/\s/g, '')).innerText = result;
+                sum += result;
+            }
+            document.getElementById('sumResult').innerText = 'Total: ' + sum;
+        }
+    </script>
+</body>
+</html>
